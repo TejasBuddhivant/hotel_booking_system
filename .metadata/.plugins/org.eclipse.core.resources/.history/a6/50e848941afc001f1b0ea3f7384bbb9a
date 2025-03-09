@@ -1,0 +1,18 @@
+let index = 0;
+ function slideCards() {
+     const slider = document.querySelector('.slider-wrapper');
+     const totalCards = document.querySelectorAll('.card').length;
+     index = (index + 1) % totalCards;
+     slider.style.transform = `translateX(-${index * 100}%)`;
+ }
+ setInterval(slideCards, 5000);
+ 
+ let currentIndex = 0;
+    function changeImage() {
+        const images = document.querySelectorAll('.room img');
+        images.forEach(img => img.classList.remove('active'));
+        images[currentIndex].classList.add('active');
+        currentIndex = (currentIndex + 1) % images.length;
+    }
+    setInterval(changeImage, 2000);
+    document.addEventListener("DOMContentLoaded", changeImage);

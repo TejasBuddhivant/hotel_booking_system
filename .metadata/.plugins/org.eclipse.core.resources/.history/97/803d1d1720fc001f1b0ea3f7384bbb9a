@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Room</title>
+    <link rel="stylesheet" href="StyleSheets/bookroom.css">
+</head>
+<body>
+
+<%
+    HttpSession sessionBook = request.getSession(false);
+    if (sessionBook == null || sessionBook.getAttribute("user") == null) {
+        response.sendRedirect("../index.html");
+        return;
+    }
+
+    String roomType = request.getParameter("roomType");
+    String roomPrice = request.getParameter("roomPrice");
+    String roomNo = request.getParameter("roomNo");
+
+    sessionBook.setAttribute("roomType", roomType);
+    sessionBook.setAttribute("roomPrice", roomPrice);
+    sessionBook.setAttribute("roomNo", roomNo);
+%>
+
+<header>
+    <nav>
+        <h1>Book Your Room</h1>
+        <a href="http://localhost:8080/hotel_mgt_new/userdashboard.jsp">Back to Dashboard</a>
+    </nav>
+</header>
+
+<div class="booking-info">
+    <h2>Room Details</h2>
+    <p><strong>Room Type:</strong> <%= roomType %></p>
+    <p><strong>Room No:</strong> <%= roomNo %></p>
+    <p><strong>Price:</strong> $<%= roomPrice %> Per Night</p>
+</div>
+
+</body>
+</html>

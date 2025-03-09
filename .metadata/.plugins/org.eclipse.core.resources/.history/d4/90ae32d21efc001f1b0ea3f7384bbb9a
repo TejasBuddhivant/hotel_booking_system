@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Room</title>
+</head>
+<body>
+    <%
+        HttpSession sessionUser = request.getSession(false);
+        if (sessionUser == null || sessionUser.getAttribute("user") == null) {
+            response.sendRedirect("index.html");
+            return;
+        }
+
+        // Get the selected room type from the form submission
+        String selectedRoom = request.getParameter("roomType");
+
+        // Store in session
+        sessionUser.setAttribute("selectedRoom", selectedRoom);
+    %>
+
+    <h1>Room Booking</h1>
+    <p>You have selected: <strong><%= selectedRoom %></strong></p>
+
+    <form action="confirmBooking.jsp" method="post">
+        <input type="hidden" name="roomType" value="<%= selectedRoom %>">
+        <button type="submit">Confirm Booking</button>
+    </form>
+</body>
+</html>

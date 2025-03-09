@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Room</title>
+</head>
+<body>
+    <%
+        HttpSession sessionUser = request.getSession(false);
+        if (sessionUser == null || sessionUser.getAttribute("user") == null) {
+            response.sendRedirect("index.html");
+            return;
+        }
+
+        String userEmail = (String) sessionUser.getAttribute("user"); // Get logged-in user's email
+        String selectedRoom = request.getParameter("roomType");
+        String roomNo = request.getParameter("roomNo"); // Capture room number
+
+        // Store in session
+        sessionUser.setAttribute("selectedRoom", selectedRoom);
+        sessionUser.setAttribute("roomNo", roomNo);
+    %>
+
+    <h1>Confirm Your Booking</h1>
+    <p>You have selected: <strong><%= selectedRoom %></strong></p>
+    <p>Room No: <strong><%= roomNo %></strong></p>
+
+    <form action="BookRoomServlet" method="post">
+        <input type="hidden" name="roomType" value="<%= selectedRoom %>">
+        <input type="hidden" name="roomNo" value="<%= roomNo %>">
+        <button type="submit">Confirm Booking</button>
+    </form>
+</body>
+</html>
+
