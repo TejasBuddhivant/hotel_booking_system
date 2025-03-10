@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hotel Booking System</title>
+        <!-- <link rel="stylesheet" href="StyleSheets/indexStyle.css"> -->
+        <!-- <link rel="stylesheet" href="StyleSheets/indexStyle.css"> -->
+        <link rel="stylesheet" href="StyleSheets/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.css">
+    </head>
+    <body>
+        <header>
+        <nav>
+            <div class="logo">HotelBooking
+            </div>
+            
+        <a href="#contact">Contact</a>
+		<a href="SignUp.jsp">SignUp</a>
+        <a href="login.jsp">login</a>
+             
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>Find Your Perfect Stay</h1>
+        <p>Book the best hotels at the best prices</p>
+        
+        <a href="login.jsp" class="button">Book Now</a>
+    </section>
+    
+    <section class="featured-rooms">
+        <h2>Featured Rooms</h2>
+        <div class="room-list">
+            <div class="room">
+                <img src="images/room3.jpg" alt="Room 1">
+                <h3>Deluxe Room</h3>
+                <p>$100 per night</p>
+            </div>
+            <div class="room">
+                <img src="images/room2.jpg" alt="Room 2">
+                <h3>Luxury Suite</h3>
+                <p>$200 per night</p>
+            </div>
+        </div>
+      <div class="room-list">
+			<div class="room">
+                <img src="images/room4.png" alt="Room 2">
+                <h3>Executive Suite</h3>
+                <p>$300 per night</p>
+            </div>
+            <div class="room">
+                <img src="images/room5.jpg" alt="Room 2">
+                <h3>Presidential Suite</h3>
+                <p>$500 per night</p>
+            </div>
+            </div>
+    </section>
+    
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 HotelBooking. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="JavaScripts/indexJavaScript.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
+</body>
+</html>

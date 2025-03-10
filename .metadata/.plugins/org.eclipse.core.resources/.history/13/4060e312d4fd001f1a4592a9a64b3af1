@@ -1,0 +1,72 @@
+package com.Logins;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/confirmBooking")
+public class ConfirmBookingServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail"); // Ensure user is logged in
+
+        if (userEmail == null) {
+            response.sendRedirect("login.jsp"); // Redirect if user is not logged in
+            return;
+        }
+
+        String roomNo = request.getParameter("roomNo");
+        String checkInDate = request.getParameter("checkInDate");
+        String checkOutDate = request.getParameter("checkOutDate");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking", "root", "Tejas@412301");
+
+            // Check if the email exists in users table
+            String userCheckQuery = "SELECT email FROM users WHERE email = ?";
+            PreparedStatement userCheckStmt = con.prepareStatement(userCheckQuery);
+            userCheckStmt.setString(1, userEmail);
+            if (!userCheckStmt.executeQuery().next()) {
+                response.sendRedirect("error.jsp?msg=Invalid User");
+                return;
+            }
+
+            // Update the rooms table with booked_by user
+            String updateQuery = "UPDATE rooms SET booked_by = ?, check_in_date = ?, check_out_date = ? WHERE room_no = ?";
+            ps = con.prepareStatement(updateQuery);
+            ps.setString(1, userEmail);
+            ps.setString(2, checkInDate);
+            ps.setString(3, checkOutDate);
+            ps.setString(4, roomNo);
+
+            int updatedRows = ps.executeUpdate();
+            if (updatedRows > 0) {
+                response.sendRedirect("invoice.jsp"); // Redirect to invoice page
+            } else {
+                response.sendRedirect("error.jsp?msg=Room not found or already booked");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp?msg=Database Error");
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
+        }
+    }
+}

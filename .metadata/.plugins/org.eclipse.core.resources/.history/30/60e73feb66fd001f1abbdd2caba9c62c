@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
+<%
+    // Start or retrieve the session
+    HttpSession sessionUser = request.getSession(true);
+
+    // Get the selected room type from the request
+    String roomType = request.getParameter("roomType");
+    if (roomType != null) {
+        sessionUser.setAttribute("roomType", roomType);
+    } else {
+        roomType = (String) sessionUser.getAttribute("roomType");
+    }
+
+    String roomNo = "";
+    String roomPrice = "";
+    
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking", "root", "Tejas@412301");
+
+        // Query to get room details based on room type
+        String query = "SELECT room_no, room_rate FROM rooms WHERE room_name = ? AND booked_by IS NULL LIMIT 1";
+        ps = con.prepareStatement(query);
+        ps.setString(1, roomType);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            roomNo = rs.getString("room_no");
+            roomPrice = rs.getString("room_rate");
+
+            // Store room details in session
+            sessionUser.setAttribute("roomNo", roomNo);
+            sessionUser.setAttribute("roomPrice", roomPrice);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try { if (rs != null) rs.close(); } catch (Exception e) {}
+        try { if (ps != null) ps.close(); } catch (Exception e) {}
+        try { if (con != null) con.close(); } catch (Exception e) {}
+    }
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="StyleSheets/style.css">
+    <title>Book Room</title>
+</head>
+<body>
+    <h2>Room Booking Details</h2>
+    <img src="https://cdn.pixabay.com/photo/2016/11/19/00/32/boy-1837466_1280.png" alt="Deluxe Room">
+    <p><strong>Room Type:</strong> <%= roomType %></p>
+    <p><strong>Room No:</strong> <%= roomNo %></p>
+    <p><strong>Price Per Night:</strong> $<%= roomPrice %></p>
+
+    <form action="confirmBooking.jsp" method="post">
+        <input type="hidden" name="roomNo" value="<%= roomNo %>">
+        <input type="hidden" name="roomType" value="<%= roomType %>">
+        <input type="hidden" name="roomPrice" value="<%= roomPrice %>">
+        <button type="submit">Confirm Booking</button>
+    </form>
+</body>
+</html>

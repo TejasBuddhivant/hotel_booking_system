@@ -1,0 +1,64 @@
+package com.booking;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/confirmBooking")
+public class confirmBooking extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String roomNo = request.getParameter("roomNo");
+        String roomType = request.getParameter("roomType");
+        String roomPrice = request.getParameter("roomPrice");
+        String checkInDate = request.getParameter("checkInDate");
+        String checkOutDate = request.getParameter("checkOutDate");
+        
+        String customerName = (String) session.getAttribute("customerName");
+        if (customerName == null) {
+            customerName = "Guest";
+        }
+
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking", "root", "Tejas@412301");
+
+            String query = "UPDATE rooms SET booked_by=?, check_in=?, check_out=? WHERE room_no=?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, customerName);
+            ps.setString(2, checkInDate);
+            ps.setString(3, checkOutDate);
+            ps.setString(4, roomNo);
+            
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+                session.setAttribute("roomNo", roomNo);
+                session.setAttribute("roomType", roomType);
+                session.setAttribute("roomPrice", roomPrice);
+                session.setAttribute("checkInDate", checkInDate);
+                session.setAttribute("checkOutDate", checkOutDate);
+                response.sendRedirect("invoice.jsp");
+            } else {
+                response.getWriter().println("Booking failed. Room may not be available.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Database error occurred.");
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
+        }
+    }
+}

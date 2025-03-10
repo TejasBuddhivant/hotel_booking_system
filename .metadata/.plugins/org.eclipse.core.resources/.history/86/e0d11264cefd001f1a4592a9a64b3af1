@@ -1,0 +1,116 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.sql.*, java.time.LocalDate, java.time.temporal.ChronoUnit" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
+<%
+    HttpSession sessionUser = request.getSession(false);
+    if (sessionUser == null || sessionUser.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    String username = (String) sessionUser.getAttribute("username");
+    String roomNo = request.getParameter("roomNo");
+    String roomType = request.getParameter("roomType");
+    String roomPrice = request.getParameter("roomPrice");
+    String checkInDate = request.getParameter("checkInDate");
+    String checkOutDate = request.getParameter("checkOutDate");
+
+    // ✅ Fix 1: Use LocalDate for accurate date calculations
+    LocalDate checkIn = LocalDate.parse(checkInDate);
+    LocalDate checkOut = LocalDate.parse(checkOutDate);
+    long totalDays = ChronoUnit.DAYS.between(checkIn, checkOut);
+
+    // ✅ Fix 2: Parse room price correctly as a double
+    double roomPriceDouble = Double.parseDouble(roomPrice);
+    int totalCost = (int) (roomPriceDouble * totalDays);
+
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    boolean bookingSuccess = false;
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking", "root", "Tejas@412301");
+
+        // ✅ Fix 3: Check if the room is already booked
+        String checkQuery = "SELECT booked_by FROM rooms WHERE room_no = ? AND booked_by IS NULL";
+
+        ps = con.prepareStatement(checkQuery);
+        ps.setString(1, roomNo);
+        rs = ps.executeQuery();
+
+        if (!rs.next()) { // Room is available
+            rs.close();
+            ps.close(); // Close the previous statement before reuse
+
+            // ✅ Fix 4: Update booking details in database
+            String updateQuery = "UPDATE rooms SET booked_by = ?, check_in_date = ?, check_out_date = ? WHERE room_no = ?";
+
+            ps = con.prepareStatement(updateQuery);
+            ps.setString(1, username);
+            ps.setString(2, checkInDate);
+            ps.setString(3, checkOutDate);
+            ps.setString(4, roomNo);
+
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+                bookingSuccess = true;
+                System.out.println("Booking successful for room: " + roomNo);
+            } else {
+                System.out.println("Booking failed. Room might not be available.");
+            }
+        } else {
+            System.out.println("Room is already booked.");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try { if (rs != null) rs.close(); } catch (Exception e) {}
+        try { if (ps != null) ps.close(); } catch (Exception e) {}
+        try { if (con != null) con.close(); } catch (Exception e) {}
+    }
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .container { background: white; padding: 20px; max-width: 500px; margin: auto; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #28a745; }
+        p { font-size: 18px; margin: 10px 0; }
+        .btn { padding: 10px 15px; font-size: 18px; background-color: #007bff; color: white; border: none; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 15px; cursor: pointer; }
+        .btn:hover { background-color: #0056b3; }
+    </style>
+    <script>
+        function printInvoice() {
+            var invoiceSection = document.getElementById("invoice");
+            var printWindow = window.open("", "", "width=800,height=600");
+            printWindow.document.write(invoiceSection.innerHTML);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <% if (bookingSuccess) { %>
+            <h2>Booking Confirmed!</h2>
+            <div id="invoice">
+                <p><strong>Customer Name:</strong> <%= username %></p>
+                <p><strong>Room Type:</strong> <%= roomType %></p>
+                <p><strong>Room No:</strong> <%= roomNo %></p>
+                <p><strong>Total Cost:</strong> $<%= totalCost %></p>
+            </div>
+            <button class="btn" onclick="printInvoice()">Print Invoice</button>
+        <% } else { %>
+            <h2 style="color: red;">Booking Failed!</h2>
+        <% } %>
+    </div>
+</body>
+</html>
