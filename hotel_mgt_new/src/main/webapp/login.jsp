@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Hotel Booking</title>
+    <title>Login - Reva's Lodging</title>
       <!--  <link rel="stylesheet" href="StyleSheets/indexStyle.css"> -->
                 <link rel="stylesheet" href="StyleSheets/SignUpAndLogin.css">
     <link rel="stylesheet" href="styles.css">

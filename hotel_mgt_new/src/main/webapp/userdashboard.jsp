@@ -149,7 +149,7 @@
     <header>
         <nav>
             <h1>Welcome, <%= userName %>😊</h1>
-            <div class="logo">HotelBooking</div>
+            <div class="logo">Reva's Lodging</div>
             <!-- My Room Toggle Button -->
             <div class="dropdown">
                 <button class="toggle-btn" onclick="toggleDropdown()">My Room</button>

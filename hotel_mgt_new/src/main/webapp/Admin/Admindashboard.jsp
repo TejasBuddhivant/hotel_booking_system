@@ -199,6 +199,7 @@ font-size: 70px
 %>
 <nav>
 <h1>Helllow Admin <p claas="emoji">🐵</p></h1>
+<h1>Reva's Lodging</h1>
 <a href="../AdminlogoutServlet">Logout</a>
 </nav>
 
