@@ -13,8 +13,25 @@
             .dropdown {
             position: relative;
             display: inline-block;
+            margin-top:15px
+            background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
         }
+.button {
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
+.button:hover {
+    background: #0c0c0c;
+}
         .dropdown-content {
             display: none;
             position: absolute;
@@ -131,11 +148,11 @@
 
     <header>
         <nav>
-            <h1>Welcome, <%= userName %>!</h1>
+            <h1>Welcome, <%= userName %>😊</h1>
             <div class="logo">HotelBooking</div>
             <!-- My Room Toggle Button -->
             <div class="dropdown">
-                <button class="toggle-btn" onclick="toggleDropdown()">My Room ▼</button>
+                <button class="toggle-btn" onclick="toggleDropdown()">My Room</button>
                 <div class="dropdown-content" id="roomDropdown">
     <% 
         boolean hasRooms = false;
@@ -145,6 +162,7 @@
         <p><strong><%= rs.getString("room_name") %></strong> - Room No: <%= rs.getString("room_no") %> ($<%= rs.getString("room_rate") %> per night)</p>
         <form method="post">
             <input type="hidden" name="roomNo" value="<%= rs.getString("room_no") %>">
+            <a href="roombooking/invoice.jsp">View Invoice</a>
             <button type="submit" name="cancelBooking" class="cancel-btn">Cancel Reservation</button>
         </form>
     <% 
@@ -177,7 +195,7 @@
                     <img src="images/room3.jpg" alt="Deluxe Room">
                     <h3>Deluxe Room</h3>
                  
-                    <button type="submit" name="roomType" value="Deluxe Room" onclick="setRoomSession('Deluxe Room', '100', '101')">$100 Per Night</button>
+                    <button type="submit" name="roomType" value="Deluxe Room" class="bookbutton" onclick="setRoomSession('Deluxe Room', '100', '101')">$100 Per Night</button>
                 </div>
 
                 <!-- Room 2 -->
@@ -185,7 +203,7 @@
                     <img src="images/room2.jpg" alt="Luxury Suite">
                     <h3>Luxury Suite</h3>
                
-                    <button type="submit" name="roomType" value="Luxury Suite" onclick="setRoomSession('Luxury Suite', '200', '202')">$200 Per Night</button>
+                    <button type="submit" name="roomType" value="Luxury Suite" class="bookbutton" onclick="setRoomSession('Luxury Suite', '200', '202')">$200 Per Night</button>
                 </div>
             </div>
             <br>
@@ -196,7 +214,7 @@
                     <img src="images/room4.png" alt="Executive Suite">
                     <h3>Executive Suite</h3>
                  
-                    <button type="submit" name="roomType" value="Executive Suite" onclick="setRoomSession('Executive Suite', '300', '301')">$300 Per Night</button>
+                    <button type="submit" name="roomType" value="Executive Suite" class="bookbutton" onclick="setRoomSession('Executive Suite', '300', '301')">$300 Per Night</button>
                 </div>
 
                 <!-- Room 4 -->
@@ -204,7 +222,7 @@
                     <img src="images/room5.jpg" alt="Presidential Suite">
                     <h3>Presidential Suite</h3>
                
-                    <button type="submit" name="roomType" value="Presidential Suite" onclick="setRoomSession('Luxury Suite', '500', '401')">$500 Per Night</button>
+                    <button type="submit" name="roomType" value="Presidential Suite" class="bookbutton" onclick="setRoomSession('Luxury Suite', '500', '401')">$500 Per Night</button>
                 </div>
             </div>
             

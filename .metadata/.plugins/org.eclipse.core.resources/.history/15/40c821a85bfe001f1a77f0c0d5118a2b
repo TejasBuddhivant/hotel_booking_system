@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- https://pixabay.com/vectors/artwork-art-kids-design-creative-4204822/ -->
+<!-- https://pixabay.com/vectors/art-artwork-drawing-painting-4226052/ -->
+<img alt="" src="https://pixabay.com/illustrations/cat-funny-sketch-drawing-6533403/">
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - HotelBooking</title>
+    <link rel="stylesheet" href="StyleSheets/contact.css">
+</head>
+<body>
+
+    <div class="contact-container">
+        <h1>Welcome to HotelBooking</h1>
+        <p>Your perfect destination for luxury and comfort.</p>
+
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p><strong>Email:</strong> contact@hotelbooking.com</p>
+            <p><strong>Phone:</strong> +91 98765 43210</p>
+            <p><strong>Address:</strong> 123, Beach Road, Mumbai, India</p>
+        </div>
+
+        <div class="social-media">
+            <h2>Follow Us</h2>
+            <a href="#" class="social-link">Facebook</a>
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">Twitter</a>
+        </div>
+
+        <a href="index.html" class="home-btn">Go to Home</a>
+    </div>
+
+</body>
+</html>

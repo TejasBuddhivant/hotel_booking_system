@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* Reset Default Margin and Padding */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2019/05/15/11/35/artwork-4204822_1280.png');
+    background-repeat: no-repeat;  /* Ensures the image does not repeat */
+    background-size: cover; /* Ensures the image covers the full screen */
+    background-position: center; /* Centers the image */
+    font-family: Arial, sans-serif;
+}

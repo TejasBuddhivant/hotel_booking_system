@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+/* Reset Default Margin and Padding */
+/* body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('https://p4.wallpaperbetter.com/wallpaper/245/866/531/one-piece-monkey-d-luffy-hokusai-waves-wallpaper-preview.jpg');
+    background-repeat: no-repeat;  Ensures the image does not repeat
+    background-size: cover; Ensures the image covers the full screen
+    background-position: center; Centers the image
+    font-family: Arial, sans-serif;
+} */
+
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Full-screen background with a funky glass effect */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('https://p4.wallpaperbetter.com/wallpaper/245/866/531/one-piece-monkey-d-luffy-hokusai-waves-wallpaper-preview.jpg') no-repeat center center/cover;
+}
+
+/* Contact container with glass effect */
+.contact-container {
+    width: 60%;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    animation: glass-glow 2s infinite alternate;
+}
+
+/* Title */
+h1 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Contact Info */
+.contact-info h2, .social-media h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+    color: #ffcc00;
+}
+
+.contact-info p {
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Social Media Links */
+.social-link {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Facebook = Instagram Gradient */
+.social-link:nth-child(3) {
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 0, 150, 0.7);
+}
+
+/* Twitter = TikTok Neon Animation */
+.social-link:nth-child(2) {
+    background: black;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link:nth-child(2)::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    background: linear-gradient(90deg, cyan, magenta);
+    animation: neon-move 1.5s linear infinite;
+}
+
+/* Button to Go Home */
+.home-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff0099, #493240);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.home-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 0, 150, 0.7);
+}
+
+/* Glass Effect Animation */
+@keyframes glass-glow {
+    from {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* TikTok Neon Effect */
+@keyframes neon-move {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}

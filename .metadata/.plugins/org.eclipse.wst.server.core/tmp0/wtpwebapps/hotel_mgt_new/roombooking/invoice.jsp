@@ -117,9 +117,10 @@
         <p><strong>Price Per Night:</strong> $<%= roomPrice %></p>
         <hr>
         <p class="highlight"><strong>Total Amount:</strong> $<%= totalCost %></p>
-        <p>Scan the QR code for details:</p>
-        <img src="qr.png" alt="QR Code">
+        <p>Scan the QR code for Payment:</p>
+        <img src="tej_g_b_qr.png">
         <button onclick="window.print()">Print Invoice</button>
+        <a href="http://localhost:8080/hotel_mgt_new/userdashboard.jsp">home</a>
     </div>
 
 </body>

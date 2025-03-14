@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* Reset Default Margin and Padding */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('https://imgs.search.brave.com/YOXpZdjLWN4WMXuTGp_TXN4C9UTSNn1N7y_hXXq-CQY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDkxNzU1/MTUuanBn');
+    background-repeat: no-repeat;  /* Ensures the image does not repeat */
+    background-size: cover; /* Ensures the image covers the full screen */
+    background-position: center; /* Centers the image */
+    font-family: Arial, sans-serif;
+}

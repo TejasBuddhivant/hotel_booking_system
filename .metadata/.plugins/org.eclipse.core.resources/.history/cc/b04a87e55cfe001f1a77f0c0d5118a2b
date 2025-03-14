@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* Reset Default Margin and Padding */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://cdn.pixabay.com/photo/2019/05/24/11/34/art-4226052_1280.png');
+    background-image: no-repeat;
+    background-image:cover;
+    font-family: Arial, sans-serif;
+}
